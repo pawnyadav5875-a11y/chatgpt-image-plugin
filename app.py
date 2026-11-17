@@ -2,7 +2,8 @@ import os
 import urllib.parse
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("PawanImageGenerator")
+port = int(os.environ.get("PORT", 10000))
+mcp = FastMCP("PawanImageGenerator", host="0.0.0.0", port=port)
 
 @mcp.tool()
 def generate_free_image(prompt: str) -> str:
@@ -17,6 +18,5 @@ def generate_free_image(prompt: str) -> str:
     return f"Image generated successfully. Display it using: ![Generated Image]({image_url})"
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    mcp.run(transport="streamable-http", host="0.0.0.0", port=port)
-  
+    mcp.run(transport="streamable-http")
+    
